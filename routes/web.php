@@ -1,10 +1,10 @@
-<?php 
+<?php
 
 use Illuminate\Support\Facades\Route;
 
 Route::get('/check','FrontendController@check');
 Route::get('/pwa',function(){
-	return redirect('/'); 
+	return redirect('/');
 });
 
 
@@ -22,7 +22,7 @@ Route::group(['domain' => env('APP_URL')], function($domain)
 	Route::get('merchant/register/{id}', 'FrontendController@register_view')->name('merchant.form');
 	Route::post('seller-register/{id}', 'FrontendController@register')->name('merchant.register-make');
 	Route::get('/set_to_currency', 'FrontendController@set_to_currency');
-	
+
 	//Customer unsubscriber with email
     Route::get('/unsubscribe', 'FrontendController@unsubscribe');
     Route::post('/register_unsubscriber', 'FrontendController@register_unsubscriber')->name('register_unsubscriber');
@@ -51,16 +51,16 @@ Route::group(['domain' => env('APP_URL')], function($domain)
 		Route::post('/razorpay/status', '\App\Helper\Subscription\Razorpay@status');
 		Route::post('/paystack/status', '\App\Helper\Subscription\Paystack@status');
 	});
-	
-	
+
+
 	Route::get('/sitemap.xml', function(){
 		return response(file_get_contents(base_path('sitemap.xml')), 200, [
 			'Content-Type' => 'application/xml'
 		]);
 
 	});
-	
-	
+
+
 });
 
 
@@ -119,10 +119,10 @@ Route::group(['domain' => '{subdomain}.'.env('APP_PROTOCOLESS_URL'),'middleware'
 		Route::get('/get_reviews/{id}','FrontendController@get_reviews');
 		Route::get('/thanks', 'FrontendController@thanks');
 		Route::get('/make_local', 'FrontendController@make_local');
-        Route::get('/set_to_currency', 'FrontendController@set_to_currency'); 
+        Route::get('/set_to_currency', 'FrontendController@set_to_currency');
 		Route::get('/sitemap.xml', 'FrontendController@sitemap');
 		Route::get('/page/{slug}/{id}', 'FrontendController@page');
-		
+
 		  Route::get('/blogs', 'FrontendController@all_blogs')->name('all_blogs');
             Route::get('/blogs/{slug}', 'FrontendController@view_blogs');
 
@@ -155,8 +155,8 @@ Route::group(['domain' => '{subdomain}.'.env('APP_PROTOCOLESS_URL'),'middleware'
 
 		Route::get('/payment-with-paystack','\App\Helper\Order\Paystack@view');
 		Route::post('/payement/paystack','\App\Helper\Order\Paystack@status');
-		
-		
+
+
 	});
 
 });
@@ -217,7 +217,7 @@ Route::group(['domain' => '{domain}','middleware'=>['domain','customdomain']], f
 		Route::get('/sitemap.xml', 'FrontendController@sitemap');
 		Route::get('/page/{slug}/{id}', 'FrontendController@page');
         Route::post('/add-comment', 'FrontendController@Article_comment')->name('article-comment');
-        
+
 		Route::group(['prefix'=>'user'],function(){
 			Route::get('/login','UserController@login')->middleware('guest');
 			Route::get('/register','UserController@register')->middleware('guest');
@@ -246,8 +246,8 @@ Route::group(['domain' => '{domain}','middleware'=>['domain','customdomain']], f
 
 		Route::get('/payment-with-paystack','\App\Helper\Order\Paystack@view');
 		Route::post('/payement/paystack','\App\Helper\Order\Paystack@status');
-		
-		
+
+
 	});
 
 });
@@ -343,7 +343,7 @@ Route::group(['as' =>'admin.','prefix'=>'admin','namespace'=>'Admin','middleware
 	Route::resource('cron','CronController');
 
 	Route::get('/profile','AdminController@settings')->name('profile.settings');
-	
+
 
 });
 
@@ -356,7 +356,7 @@ Route::post('user_profile_update','Seller\SettingController@profile_update')->na
 Route::group(['as' =>'seller.','prefix'=>'seller','namespace'=>'Seller','middleware'=>['auth', 'seller']],function(){
 
 	Route::get('/marketing/import', 'MarketingController@import');
-	
+
 	Route::get('dashboard','DashboardController@dashboard')->name('dashboard');
 	Route::get('dashboard/static','DashboardController@staticData')->name('dashboard.static');
 	Route::get('dashboard/perfomance/{period}','DashboardController@perfomance')->name('dashboard.perfomance');
@@ -404,7 +404,7 @@ Route::group(['as' =>'seller.','prefix'=>'seller','namespace'=>'Seller','middlew
 	Route::post('files/update','FileController@update')->name('files.update');
 	Route::post('files/destroy','FileController@destroy')->name('files.destroy');
 
-    
+
 
 	Route::resource('inventory','InventoryController');
 
@@ -433,22 +433,22 @@ Route::group(['as' =>'seller.','prefix'=>'seller','namespace'=>'Seller','middlew
 	Route::resource('settings','SettingController');
 
 	Route::resource('payment','GetwayController');
-	
+
 	Route::resource('transection','TransectionController');
 
 	Route::get('report','ReportController@index')->name('report.index');
-	
+
 	 Route::get('/blog/articles', 'BlogCategoryController@articles')->name('blog-setting');
-      
+
       Route::get('/blog/view', 'BlogCategoryController@view')->name('blog-view');
       Route::get('/blog/create', 'BlogCategoryController@create')->name('new-blog-create');
       Route::post('/blog/create', 'BlogCategoryController@blog_store')->name('blog-create.store');
       Route::get('/blog/delete/{id}', 'BlogCategoryController@blog_destroy')->name('blog.destroy');
       Route::get('/blog/edit/{id}', 'BlogCategoryController@edit_blog_cat')->name('blog.edit_this');
       Route::post('/blog/update', 'BlogCategoryController@update_blog_cat')->name('blog.update_this');
-      
+
          // articles
-    
+
         Route::get('/blog/articles', 'BlogController@articles')->name('blog-articles');
         Route::get('/blog/article/create', 'BlogController@articles_create')->name('blog-create');
         Route::post('/blog/article/store', 'BlogController@articles_store')->name('blog-article.store');
@@ -457,22 +457,22 @@ Route::group(['as' =>'seller.','prefix'=>'seller','namespace'=>'Seller','middlew
         Route::get('/blog/article/delete/{id}', 'BlogController@article_destroy')->name('blog-article.destroy');
         Route::get('/blog/blog-setting', 'BlogController@blog_setting')->name('blog-article.setting');
         Route::put('/blog/blog-update-setting', 'BlogController@blog_setting_update')->name('blog-article.update');
-       
+
 
        // comments
        Route::get('/blog/comment', 'ArticleCommentController@ArticleComment')->name('blog-articleComment');
        Route::get('/blog/view-comment/{id}', 'ArticleCommentController@show_comments')->name('blog-showComment');
        Route::get('/blog/comment-delete/{id}', 'ArticleCommentController@comment_deleted')->name('blog-commentDeleted');
-   
-   // newsletter	
+
+   // newsletter
 	Route::get('/newsletters', 'NewsLetterController@index')->name('index');
 	Route::get('/create-newsletters', 'NewsLetterController@NewsLetter')->name('newsletter');
 	Route::post('/store-newsletter', 'NewsLetterController@store_NewsLetter')->name('store.newsletter');
 	Route::get('/edit-newsletter/{id}', 'NewsLetterController@edit_newsletter')->name('edit-newsletter');
 	Route::post('/update-newsletter/{id}', 'NewsLetterController@update_NewsLetter')->name('update.newsletter_this');
 	Route::get('/delete-newsletter/{id}', 'NewsLetterController@delete_NewsLetter')->name('delete.newsletter_this');
-	
-    //system email 	
+
+    //system email
 	Route::get('/create-system-email', 'SystemTemplateController@create')->name('create-systememail');
 	Route::post('/store-system-template', 'SystemTemplateController@store')->name('store-systememail');
 	Route::get('/system-email/{id}', 'SystemTemplateController@edit_system_template')->name('update-systememail');
@@ -492,8 +492,8 @@ Route::group(['as' =>'seller.','prefix'=>'seller','namespace'=>'Seller','middlew
 		Route::resource('slider','SliderController');
 
 	});
-	
-	
+
+
 
 	Route::resource('customer','CustomerController');
 	Route::get('customer/login/{id}','CustomerController@login')->name('customer.login');
@@ -514,11 +514,11 @@ Route::group(['as' =>'seller.','prefix'=>'seller','namespace'=>'Seller','middlew
 	Route::post('orders/fulfillment','OrderController@destroy')->name('orders.method');
 	Route::get('/make-payment/{id}','PlanController@make_payment')->name('make_payment');
 	Route::get('plan-renew','PlanController@renew');
-	
+
 	Route::get('/settings','SettingController@settings_view')->name('seller.settings');
 	Route::post('/profile_update','SettingController@profile_update')->name('profile.update');
 	Route::post('/make-charge/{id}','PlanController@make_charge')->name('make_payment_charge');
-	
+
 	// staff accounts
 	Route::resource('staff', 'StaffController');
 	Route::post('/staff/destroy', 'StaffController@destroy')->name('staff.destroy');
@@ -527,9 +527,9 @@ Route::group(['as' =>'seller.','prefix'=>'seller','namespace'=>'Seller','middlew
 	Route::get('/abandoned_cart','AbandonedCartController@index')->name('abandoned_cart.list');
 	Route::post('/abandoned_cart','AbandonedCartController@send_email')->name('abandoned_cart.email');
 	Route::get('/abandoned_cart/view/{id}', 'AbandonedCartController@show');
-	
+
     Route::get('/support','SettingController@support_view')->name('support');
-	
+
 	//payment methods
 	Route::get('/payment-success','PlanController@success')->name('payment.success');
 	Route::get('/payment-fail','PlanController@fail')->name('payment.fail');
@@ -541,7 +541,7 @@ Route::group(['as' =>'seller.','prefix'=>'seller','namespace'=>'Seller','middlew
 	Route::post('/razorpay/status', '\App\Helper\Subscription\Razorpay@status')->name('razorpay.status');
 	Route::post('/paystack/status', '\App\Helper\Subscription\Paystack@status');
 	Route::get('/payment_with_mercado', '\App\Helper\Subscription\Mercado@status');
-	
+
 	//for credits payment
 	Route::get('/make-payment_credit','CreditsController@make_payment_credit')->name('make_payment_credit');
 	Route::post('/make-charge_credit/{num}','CreditsController@make_charge_credit')->name('make_charge_credit');
